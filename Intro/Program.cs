@@ -1,6 +1,8 @@
-﻿
+﻿// --------------- 1. GÜN ------------------------------
+
 // variables --> camelCase
 using Intro.Business;
+using Intro.DataAccess.Concretes;
 using Intro.Entities;
 
 string message1 = "Krediler";
@@ -52,9 +54,61 @@ for(int i = 0; i < loans.Length; i++)
 //}
 
 // veri kaynağından geldi
-CourseManager courseManager = new CourseManager();
-Course[] courses2 = courseManager.GetAll();
-for (int i = 0; i < courses2.Length; i++)
+CourseManager courseManager = new(new CourseDal());
+List<Course> courses2 = courseManager.GetAll();
+for (int i = 0; i < courses2.Count; i++)
 {
     Console.WriteLine(courses2[i].Name + " / " + courses2[i].Price);
+}
+
+// --------------- 2. GÜN ------------------------------
+
+IndividualCustomer customer1 = new IndividualCustomer();
+customer1.Id = 1;
+customer1.NationalIdentity = "12345678901";
+customer1.FirstName = "Feyza Nur";
+customer1.LastName = "Bakır";
+customer1.CustomerNumber = "123456";
+
+IndividualCustomer customer2 = new IndividualCustomer();
+customer2.Id = 2;
+customer2.NationalIdentity = "56478965412";
+customer2.FirstName = "Engin";
+customer2.LastName = "Demiroğ";
+customer2.CustomerNumber = "123457";
+
+CorporateCustomer customer3 = new CorporateCustomer();
+customer3.Id = 3;
+customer3.Name = "Kodlamaio";
+customer3.CustomerNumber = "654778";
+customer3.TaxNumber = "12345678987";
+
+CorporateCustomer customer4 = new CorporateCustomer();
+customer4.Id = 4;
+customer4.Name = "Abc";
+customer4.CustomerNumber = "654779";
+customer4.TaxNumber = "12345678985";
+
+
+// Value Types => Stack Memory'de tutulur : int, decimal, float, double, bool, char, byte, short, long
+int number1 = 10;
+int number2 = 20;
+number1 = number2;
+number2 = 100;
+Console.WriteLine(number1);
+
+
+// Reference Types  => Heap Memory'de tutulur : array, class, interface, string 
+string[] cities1 = new string[] { "Ankara", "Adana", "Afyon" };
+string[] cities2 = new string[] { "Bursa", "Bolu", "Balıkesir" };
+cities1 = cities2;
+cities2[0] = "Niğde";
+Console.WriteLine(cities1[0]);
+
+BaseCustomer[] customers = { customer1, customer2, customer3, customer4 };
+
+//polymorphism
+foreach (BaseCustomer customer in customers)
+{
+    Console.WriteLine(customer.CustomerNumber);
 }
